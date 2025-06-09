@@ -1,0 +1,73 @@
+@import "tailwindcss";
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+  width: 100%;
+  height: 100vh;
+  color: #374151;
+}
+*{
+    transition: all 0.3s ease-in-out;
+}
+.customboxShadow {
+box-shadow: 0px 8px 9px -9px rgba(17,24,39,0.97);
+-webkit-box-shadow: 0px 8px 9px -9px rgba(17,24,39,0.97);
+-moz-box-shadow: 0px 8px 9px -9px rgba(17,24,39,0.97);
+}
+
+.category-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  width: 100%;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.selected-category-cart{
+  background-color: #3B82F6;
+  color: white;
+}
+
+.category-card:hover {
+  background-color: #3B82F6; /* Accent background on hover */
+}
+
+.category-text {
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.selected-text{
+  color: white;
+}
+.category-card:hover .category-text {
+  color: white;
+}
+
+.category-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  background-color: #3B82F6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.selected-badge{
+   background-color: white;
+   color: #3B82F6;
+}
+
+.category-card:hover .category-badge {
+  background-color: white;
+  color: #3B82F6;
+}
