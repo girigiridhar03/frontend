@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register } from "./service/Auth.service";
+import { login, refreshToken, register } from "./service/Auth.service";
 
 const initialState = {
   isLoading: false,
@@ -33,6 +33,16 @@ const clientAuthSlice = createSlice({
       })
       .addCase(login.rejected, (state, { payload }) => {
         (state.isLoading = false), (state.error = payload);
+      })
+      .addCase(refreshToken.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(refreshToken.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(refreshToken.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       });
   },
 });

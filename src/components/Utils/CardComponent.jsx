@@ -11,8 +11,19 @@ import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 const CardComponent = ({ product }) => {
   return (
-    <HStack w={"100%"} gap={"2rem"}>
-      <Box boxShadow={"xs"} w={"30%"} height={"350px"} borderRadius={"10px"} overflow={'hidden'}>
+    <VStack
+      w={"100%"}
+      gap={"2rem"}
+      border={"1px solid #D1D5DB"}
+      p={"1rem"}
+      borderRadius={"10px"}
+    >
+      <Box
+        w={"100%"}
+        height={['300px','300px','300px','300px','350px']}
+        borderRadius={"10px"}
+        overflow={"hidden"}
+      >
         <Image
           w={"100%"}
           h={"100%"}
@@ -21,9 +32,12 @@ const CardComponent = ({ product }) => {
           alt={product?.name}
         />
       </Box>
-      <VStack alignItems={"flex-start"} w={"70%"} >
-        <Box color={"muted"} fontWeight={"semibold"} fontSize={"1.1rem"}>
-          {product?.brand?.toUpperCase()}
+      <VStack
+        alignItems={"flex-start"}
+        w={"100%"}
+      >
+        <Box color={"#ADADAD"} fontWeight={"semibold"} fontSize={"1.1rem"}>
+          {product?.category?.toUpperCase()}
         </Box>
         <Box fontSize={"1.5rem"} fontWeight={"semibold"}>
           {product?.name}
@@ -39,22 +53,24 @@ const CardComponent = ({ product }) => {
             <RatingGroup.Control />
           </RatingGroup.Root>
         </Box>
-        <Box>
-          {product?.description?.length >= 500
-            ? `${product?.description?.slice(0, 500)}...`
-            : product?.description}
+        <Box color={"secondary"} fontWeight={'semibold'}>
+          <Span color={"#ADADAD"}>By</Span> {product?.brand?.toUpperCase()}
         </Box>
-        <Box color={"secondary"} fontSize={"2rem"} fontWeight={"bold"}>
-          {product?.price?.toLocaleString("en-IN")}
+
+        <HStack w={'100%'} justifyContent={'space-between'}>
+         <Box color={"secondary"} fontSize={"1.5rem"} fontWeight={"bold"}>
+         ₹{product?.price?.toLocaleString("en-IN")}
         </Box>
-        <Button bgColor={"secondary"} color={"white"} fontWeight={"bold"}>
+        <Button bgColor={"rgb(236, 72, 153,0.3)"} color={"secondary"} fontWeight={"bold"}>
           <Span>
             <AiOutlineShoppingCart />
           </Span>
           Add to Cart
         </Button>
+        </HStack>
+       
       </VStack>
-    </HStack>
+    </VStack>
   );
 };
 

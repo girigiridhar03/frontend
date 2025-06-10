@@ -6,6 +6,8 @@ import {
   HStack,
   IconButton,
   Pagination,
+  Select,
+  SimpleGrid,
   Span,
   Text,
   VStack,
@@ -18,12 +20,15 @@ import {
 import CardComponent from "../Utils/CardComponent";
 import { useLocation } from "react-router-dom";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { BiSortDown } from "react-icons/bi";
+import { BsFilterSquare } from "react-icons/bs";
 
 const ElectronicsSection = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state?.productReducer?.categories);
   const [selectedCard, setSelectedCard] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
+  const [sortBy, setSortBy] = useState("");
   const allElectronics = useSelector(
     (state) => state?.productReducer?.allelectronicsProduct
   );
@@ -43,14 +48,12 @@ const ElectronicsSection = () => {
     dispatch(
       getAllProducts({
         section: location.pathname.split("/")[1],
-        brand: selectedCard,
+        category: selectedCard,
         page: selectedPage,
         limit: 10,
       })
     );
   }, [dispatch, selectedCard, selectedPage]);
-
-  console.log(selectedPage);
 
   return (
     <HStack
@@ -59,106 +62,30 @@ const ElectronicsSection = () => {
       alignItems={"flex-start"}
       justifyContent={"space-between"}
       position={"relative"}
+      flexDirection={{ base: "column" }}
     >
-      {/* Categories */}
-      <VStack
-        position={"fixed"}
-        top={"10rem"}
-        border={"1px solid #D1D5DB"}
-        bgColor={"surface"}
-        borderRadius={"10px"}
-        boxShadow={"inset"}
-        w={"22%"}
-        alignItems={"flex-start"}
-        p={"1rem"}
-        gap={"1.5rem"}
-      >
-        <Heading size={"2xl"} fontWeight={"bold"}>
-          Category
-        </Heading>
-        <Box bgColor={"muted"} w={"100%"} borderRadius={"5px"}>
-          <Box
-            border={"2px solid #3B82F6"}
-            w={"20%"}
-            borderRadius={"5px"}
-          ></Box>
-        </Box>
-        {categories?.map((item, index) => {
-          const mapKey = index;
-          return (
-            <HStack
-              key={mapKey}
-              w={"100%"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              border={"1px solid #D1D5DB"}
-              p={"0.8rem"}
-              borderRadius={"8px"}
-              className={`${
-                selectedCard === item?.category
-                  ? "selected-category-cart"
-                  : "category-card"
-              }`}
-              onClick={() => setSelectedCard(item?.category)}
-            >
-              <Text
-                fontWeight={"semibold"}
-                className={`${
-                  selectedCard === item?.categories
-                    ? "selected-text"
-                    : "category-text"
-                }`}
-              >
-                {item?.category}
-              </Text>
-              <Box
-                className={`${
-                  selectedCard === item?.category
-                    ? "selected-badge"
-                    : "category-badge"
-                }`}
-                w={"20px"}
-                h={"20px"}
-                borderRadius={"50%"}
-                fontSize={".8rem"}
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-              >
-                {item?.totalProducts}
-              </Box>
-            </HStack>
-          );
-        })}
-      </VStack>
 
       {/* List Cards */}
 
-      <VStack
-        w={"75%"}
-        gap={"2rem"}
-        marginLeft={"30%"}
-        alignItems={"flex-start"}
-      >
+      <VStack w={"100%"} gap={"2rem"} alignItems={"flex-start"}>
         {/* Heading */}
         <HStack w={"100%"} justifyContent={"space-between"}>
-          <Text fontWeight={'semibold'}>
-            We found <Span color={"accent"}>{totalProducts}</Span> items for
+          <Text fontWeight={"semibold"} fontSize={'1.4rem'}>
+            We found <Span color={"secondary"}>{totalProducts}</Span> items for
             you!
           </Text>
-          <HStack gap={"2rem"}>
-            <Box border={"1px solid #D1D5DB"}>SHOW</Box>
-            <Box border={"1px solid #D1D5DB"}>sortby</Box>
-          </HStack>
+          <Box>
+            <BsFilterSquare />
+          </Box>
         </HStack>
 
-        <VStack w={"100%"} gap={"2rem"}>
+        <SimpleGrid columns={[1,1,2,3,4]} w={"100%"} gap={['2rem','2rem','1.5rem','1rem']}>
           {allElectronics?.map((item) => (
             <Box key={item?._id} w={"100%"}>
               <CardComponent product={item} />
             </Box>
           ))}
-        </VStack>
+        </SimpleGrid>
 
         <Pagination.Root count={count} pageSize={10} defaultPage={1}>
           <ButtonGroup variant="outline" size="sm">
@@ -173,11 +100,11 @@ const ElectronicsSection = () => {
                 return (
                   <IconButton
                     variant={{ base: "outline", _selected: "solid" }}
-                    color={page.value === selectedPage ? "surface" : "text"}
-                    bgColor={page.value === selectedPage && "accent"}
+                    color={page.value === selectedPage ? "secondary" : "text"}
+                    bgColor={page.value === selectedPage && "rgb(236, 72, 153,0.3)"}
                     _hover={{
-                      bgColor: "accent",
-                      color: "surface",
+                      bgColor: "rgb(236, 72, 153,0.3)",
+                      color: "secondary",
                       outline: "none",
                       border: "none",
                     }}

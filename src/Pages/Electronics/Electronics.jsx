@@ -4,7 +4,7 @@ import React from "react";
 
 const Electronics = () => {
   return (
-    <Box maxW={"1500px"} mx={"auto"} w={"99%"} marginTop={"10rem"} position={'relative'} marginBottom={"2rem"} paddingBottom={'2rem'}>
+    <Box maxW={"1500px"} mx={"auto"} w={"93%"} marginTop={{base :"7rem"}} position={'relative'} marginBottom={"2rem"} paddingBottom={'2rem'}>
       <ElectronicsSection />
     </Box>
   );

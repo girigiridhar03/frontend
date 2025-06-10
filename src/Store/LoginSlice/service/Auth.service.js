@@ -45,16 +45,33 @@ export const login = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       let res = await API.post("/auth/login", formData);
-      console.log(res);
-      console.log(res?.status, res?.data?.success);
 
       if (res?.status === 200 && res?.data?.success) {
         sessionStorage.setItem("token", JSON.stringify(res?.data?.accessToken));
         toast.success(res?.data?.message);
         return res.data;
+      } else if (res?.status === 404) {
+        toast.error("Access Expired.");
+        return rejectWithValue(res?.data?.message);
       } else {
         toast.error(res?.data?.message);
         return rejectWithValue(res?.data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const refreshToken = createAsyncThunk(
+  "refreshToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      let res = await API.get("/auth/refreshToken");
+
+      if (res?.status === 200 && res?.data?.success) {
+        sessionStorage.setItem("token", JSON.stringify(res?.data?.accessToken));
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
