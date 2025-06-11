@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllProducts, getCategories } from "./service/products.service";
-
+import {
+  getAllProducts,
+  getCategories,
+  getSingleProduct,
+} from "./service/products.service";
 
 const initialState = {
   isLoading: false,
@@ -9,6 +12,7 @@ const initialState = {
   allelectronicsProduct: [],
   totalProducts: null,
   pagination: {},
+  singleProduct: {},
 };
 
 const productReducer = createSlice({
@@ -56,6 +60,21 @@ const productReducer = createSlice({
         state.allelectronicsProduct = [];
         state.totalProducts = null;
         state.pagination = {};
+      })
+      .addCase(getSingleProduct.pending, (state) => {
+        state.isLoading = true;
+        state.singleProduct = {};
+        state.error = null;
+      })
+      .addCase(getSingleProduct.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.singleProduct = payload;
+        state.error = null;
+      })
+      .addCase(getSingleProduct.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.singleProduct = {};
+        state.error = payload;
       });
   },
 });

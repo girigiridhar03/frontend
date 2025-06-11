@@ -1,11 +1,7 @@
+import API from "@/Store/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { toast } from "react-toastify";
 
-const API = axios.create({
-  baseURL: "http://localhost:2345",
-  withCredentials: true,
-});
 
 export const register = createAsyncThunk(
   "register",
@@ -52,12 +48,15 @@ export const login = createAsyncThunk(
         return res.data;
       } else if (res?.status === 404) {
         toast.error("Access Expired.");
+        sessionStorage.clear("token");
         return rejectWithValue(res?.data?.message);
       } else {
         toast.error(res?.data?.message);
+        sessionStorage.clear("token");
         return rejectWithValue(res?.data?.message);
       }
     } catch (error) {
+      sessionStorage.clear("token");
       toast.error(error?.response?.data?.message || "Something went wrong");
       return rejectWithValue(error);
     }

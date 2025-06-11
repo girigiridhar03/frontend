@@ -14,11 +14,12 @@ const useTokenRefresh = () => {
       console.log("triggered")
       try {
         const { exp } = jwtDecode(token);
-        const now = Date.now();
+        const now = Date.now;
         const expireIn = exp * 1000 - now;
 
-        if (expireIn < 5 * 60 * 1000) {
+       if (expireIn > 0 && expireIn < 5 * 60 * 1000) {
           dispatch(refreshToken());
+          console.log("generate new accessToken..")
         }
       } catch (error) {
         console.log("Invalid jwt : ", error);

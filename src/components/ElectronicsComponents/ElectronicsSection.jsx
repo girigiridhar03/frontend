@@ -68,13 +68,14 @@ const ElectronicsSection = () => {
       {/* List Cards */}
 
       <VStack w={"100%"} gap={"2rem"} alignItems={"flex-start"}>
+
         {/* Heading */}
         <HStack w={"100%"} justifyContent={"space-between"}>
           <Text fontWeight={"semibold"} fontSize={'1.4rem'}>
             We found <Span color={"secondary"}>{totalProducts}</Span> items for
             you!
           </Text>
-          <Box>
+          <Box fontSize={'1.5rem'}>
             <BsFilterSquare />
           </Box>
         </HStack>

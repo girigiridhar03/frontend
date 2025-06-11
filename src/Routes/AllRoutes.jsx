@@ -1,3 +1,4 @@
+import SinglePage from "@/components/SinglePage/SinglePage";
 import AdminLayout from "@/Layout/AdminLayout";
 import AgentLayout from "@/Layout/AgentLayout";
 import MainLayout from "@/Layout/MainLayout";
@@ -31,6 +32,7 @@ const AllRoutes = () => {
             </ClientPrivate>
           }
         />
+        <Route path="/electronics/:id" element={<SinglePage />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserLogin />} />
       </Route>

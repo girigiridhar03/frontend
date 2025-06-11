@@ -1,10 +1,6 @@
+import API from "@/Store/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: "http://localhost:2345",
-  withCredentials: true,
-});
+import { toast } from "react-toastify";
 
 export const getCategories = createAsyncThunk(
   "categories",
@@ -41,3 +37,14 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
+
+export const getSingleProduct = createAsyncThunk("singleProduct",async(productId,{rejectWithValue})=>{
+  try {
+    
+    const response = await API.get(`/store/getSingleProduct/${productId}`);
+    return response?.data?.data
+  } catch (error) {
+    toast(error?.response?.data?.message || "Something went wrong")
+    rejectWithValue(error)
+  }
+})
