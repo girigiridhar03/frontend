@@ -2,7 +2,6 @@ import API from "@/Store/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-
 export const register = createAsyncThunk(
   "register",
   async (formData, { rejectWithValue }) => {
@@ -48,15 +47,15 @@ export const login = createAsyncThunk(
         return res.data;
       } else if (res?.status === 404) {
         toast.error("Access Expired.");
-        sessionStorage.clear("token");
+        sessionStorage.clear();
         return rejectWithValue(res?.data?.message);
       } else {
         toast.error(res?.data?.message);
-        sessionStorage.clear("token");
+        sessionStorage.clear();
         return rejectWithValue(res?.data?.message);
       }
     } catch (error) {
-      sessionStorage.clear("token");
+      sessionStorage.clear();
       toast.error(error?.response?.data?.message || "Something went wrong");
       return rejectWithValue(error);
     }

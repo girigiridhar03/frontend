@@ -48,8 +48,6 @@ const UserLogin = () => {
 
   const handleRegisteration = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
     const result = await dispatch(register(formData));
 
     if (register.fulfilled.match(result)) {

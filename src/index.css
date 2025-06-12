@@ -71,3 +71,32 @@ box-shadow: 0px 8px 9px -9px rgba(17,24,39,0.97);
   background-color: white;
   color: #3B82F6;
 }
+
+.tabShadow{
+box-shadow: -1px -2px 30px -19px rgba(0,0,0,0.75) inset;
+-webkit-box-shadow: -1px -2px 30px -19px rgba(0,0,0,0.75) inset;
+-moz-box-shadow: -1px -2px 30px -19px rgba(0,0,0,0.75) inset;
+}
+
+.comment-container {
+  max-height: 400px; /* or any height */
+  overflow-y: auto;
+  scrollbar-width: thin; /* for Firefox fallback */
+  scrollbar-color: #ec4899 transparent; /* for Firefox */
+}
+
+/* WebKit Scrollbar Styles */
+.comment-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.comment-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.comment-container::-webkit-scrollbar-thumb {
+  background-color: #ec4899;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
