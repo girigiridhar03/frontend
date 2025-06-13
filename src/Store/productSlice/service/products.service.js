@@ -38,13 +38,55 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-export const getSingleProduct = createAsyncThunk("singleProduct",async(productId,{rejectWithValue})=>{
-  try {
-    
-    const response = await API.get(`/store/getSingleProduct/${productId}`);
-    return response?.data?.data
-  } catch (error) {
-    toast(error?.response?.data?.message || "Something went wrong")
-    rejectWithValue(error)
+export const getSingleProduct = createAsyncThunk(
+  "singleProduct",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`/store/getSingleProduct/${productId}`);
+      return response?.data?.data;
+    } catch (error) {
+      toast(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
   }
-})
+);
+
+export const deleteComment = createAsyncThunk(
+  "deletecomment",
+  async (reqBody, { rejectWithValue }) => {
+    const { id, commentId } = reqBody;
+    try {
+      const response = await API.delete(
+        `/store/deletecomment/${id}/${commentId}`
+      );
+      if (response?.status === 200 && response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+
+      return response?.data;
+    } catch (error) {
+      toast(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk(
+  "addcomment",
+  async (reqBody, { rejectWithValue }) => {
+    try {
+      const { id, comment } = reqBody;
+      const response = await API.post(`/store/addcomments/${id}`, {
+        comment: comment,
+      });
+
+      if (response?.status === 200 && response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+      return response?.data;
+    } catch (error) {
+      toast(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);

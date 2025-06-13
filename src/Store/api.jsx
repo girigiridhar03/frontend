@@ -2,17 +2,13 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://backend-practice-project-9ds3.onrender.com",
+  baseURL: "http://localhost:2345",
   withCredentials: true,
 });
 
 // Attach token to every request
 API.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(sessionStorage.getItem("token"));
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     return config;
   },
   (error) => Promise.reject(error)
@@ -27,15 +23,13 @@ API.interceptors.response.use(
     const errorMsg = error?.response?.data?.message;
 
     const shouldTryRefresh =
-      isUnauthorized &&
-      errorMsg === "jwt expired" &&
-      !originalRequest._retry;
+      isUnauthorized && errorMsg === "jwt expired" && !originalRequest._retry;
 
     if (shouldTryRefresh) {
       originalRequest._retry = true;
       try {
         const refreshRes = await axios.get(
-          "https://backend-practice-project-9ds3.onrender.com/auth/refreshToken",
+          "http://localhost:2345/auth/refreshToken",
           { withCredentials: true }
         );
 

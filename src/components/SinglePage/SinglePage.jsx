@@ -1,4 +1,8 @@
-import { getSingleProduct } from "@/Store/productSlice/service/products.service";
+import {
+  addComment,
+  deleteComment,
+  getSingleProduct,
+} from "@/Store/productSlice/service/products.service";
 import {
   Avatar,
   Box,
@@ -14,11 +18,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const tabs = ["Descriptioin", "Comments"];
 
@@ -27,6 +33,9 @@ const SinglePage = () => {
   const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState(0);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [openMenu, setOpenMenu] = useState(null);
+  const [comment, setComment] = useState("");
+  const menuRef = useRef();
   const singleProduct = useSelector(
     (state) => state?.productReducer?.singleProduct
   );
@@ -34,6 +43,40 @@ const SinglePage = () => {
   useEffect(() => {
     dispatch(getSingleProduct(id));
   }, [id, dispatch]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpenMenu(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleDeleteComment = async (e, commentId) => {
+    e.stopPropagation();
+
+    const result = await dispatch(deleteComment({ id, commentId }));
+
+    if (deleteComment.fulfilled.match(result)) {
+      dispatch(getSingleProduct(id));
+    }
+    setOpenMenu(null);
+  };
+
+  const handleAddComment = async () => {
+    const result = await dispatch(addComment({ id, comment }));
+
+    if (addComment.fulfilled.match(result)) {
+      dispatch(getSingleProduct(id));
+    }
+
+    setComment("");
+  };
 
   return (
     <Box
@@ -230,12 +273,43 @@ const SinglePage = () => {
                 paddingInline={"2rem"}
               >
                 {singleProduct?.comments?.length > 0 ? (
-                  singleProduct?.comments?.map((comment) => (
+                  singleProduct?.comments?.map((comment, index) => (
                     <VStack
+                      ref={openMenu === index ? menuRef : null}
                       key={comment?._id}
                       alignItems={"flex-start"}
                       w={"100%"}
+                      position={"relative"}
                     >
+                      {openMenu === index && (
+                        <VStack
+                          bgColor={"rgb(236, 72, 153,0.3)"}
+                          position={"absolute"}
+                          right={-3}
+                          top={9}
+                          p={".5rem"}
+                          borderRadius={"10px"}
+                        >
+                          <Button w={"100%"} color={"secondary"}>
+                            <Span>
+                              <MdEdit />
+                            </Span>
+                            Edit
+                          </Button>
+                          <Button
+                            w={"100%"}
+                            color={"secondary"}
+                            onClick={(e) =>
+                              handleDeleteComment(e, comment?._id)
+                            }
+                          >
+                            <Span>
+                              <MdDelete />
+                            </Span>
+                            Delete
+                          </Button>
+                        </VStack>
+                      )}
                       <HStack w={"100%"} justifyContent={"space-between"}>
                         <HStack w={"100%"} gap={"0.6rem"}>
                           <Box>
@@ -262,7 +336,13 @@ const SinglePage = () => {
                           </VStack>
                         </HStack>
                         {comment?.isDelete && (
-                          <Box cursor={'pointer'}>
+                          <Box
+                            cursor={"pointer"}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenMenu(index);
+                            }}
+                          >
                             <BsThreeDotsVertical />
                           </Box>
                         )}
@@ -289,12 +369,15 @@ const SinglePage = () => {
                   border={"1px solid #D1D5DB"}
                   borderRadius={"10px"}
                   placeholder="Enter comment"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
                 />
                 <Button
                   bgColor={"rgb(236, 72, 153,0.3)"}
                   color={"secondary"}
                   fontWeight={"bold"}
                   borderRadius={"10px"}
+                  onClick={handleAddComment}
                 >
                   Add
                 </Button>

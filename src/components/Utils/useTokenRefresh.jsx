@@ -6,25 +6,32 @@ import { refreshToken } from "@/Store/LoginSlice/service/Auth.service";
 
 const useTokenRefresh = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
+    const mountedAt = Date.now();
+
     const throttledRefresh = throttle(() => {
       const token = sessionStorage.getItem("token");
-
       if (!token) return;
-      console.log("triggered")
+
+      const now = Date.now();
+      const oneMinutePassed = now - mountedAt >= 60 * 1000;
+
+      if (!oneMinutePassed) return;
+
       try {
-        const { exp } = jwtDecode(token);
-        const now = Date.now;
+        const { exp } = jwtDecode(token); // exp in seconds
         const expireIn = exp * 1000 - now;
 
-       if (expireIn > 0 && expireIn < 5 * 60 * 1000) {
+        // Refresh if token is expiring in less than 2 minutes
+        if (expireIn > 0 && expireIn < 2 * 60 * 1000) {
+          console.log("🔁 Token expiring soon, refreshing...");
           dispatch(refreshToken());
-          console.log("generate new accessToken..")
         }
       } catch (error) {
-        console.log("Invalid jwt : ", error);
+        console.error("Invalid JWT token:", error);
       }
-    }, 5 * 60 * 1000);
+    }, 2 * 60 * 1000); // throttle every 2 minutes
 
     window.addEventListener("mousemove", throttledRefresh);
     window.addEventListener("keydown", throttledRefresh);
