@@ -74,18 +74,21 @@ const MainLayoutNavbar = () => {
               Profile
             </Text>
           </VStack>
-          <VStack gap={"1px"}>
-            <Box fontSize={"1.2rem"}>
-              <SlHandbag />
-            </Box>
-            <Text
-              cursor="pointer"
-              _hover={{ fontWeight: "semibold" }}
-              transition="font-weight 0.3s"
-            >
-              Bag
-            </Text>
-          </VStack>
+
+          <Link to={"/cart"}>
+            <VStack gap={"1px"}>
+              <Box fontSize={"1.2rem"}>
+                <SlHandbag />
+              </Box>
+              <Text
+                cursor="pointer"
+                _hover={{ fontWeight: "semibold" }}
+                transition="font-weight 0.3s"
+              >
+                Bag
+              </Text>
+            </VStack>
+          </Link>
         </HStack>
       </HStack>
     </Box>

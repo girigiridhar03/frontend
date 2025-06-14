@@ -67,6 +67,7 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       let res = await API.get("/auth/refreshToken");
+      console.log(res?.data);
 
       if (res?.status === 200 && res?.data?.success) {
         sessionStorage.setItem("token", JSON.stringify(res?.data?.accessToken));

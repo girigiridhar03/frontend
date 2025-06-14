@@ -1,3 +1,4 @@
+import { addToCart } from "@/Store/productSlice/service/products.service";
 import {
   Box,
   Button,
@@ -9,8 +10,15 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 const CardComponent = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const handleAddCart = () => {
+    dispatch(addToCart({ productId: product?._id, quantity: 1 }));
+  };
+
   return (
     <VStack
       w={"100%"}
@@ -65,6 +73,7 @@ const CardComponent = ({ product }) => {
             bgColor={"rgb(236, 72, 153,0.3)"}
             color={"secondary"}
             fontWeight={"bold"}
+            onClick={handleAddCart}
           >
             <Span>
               <AiOutlineShoppingCart />

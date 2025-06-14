@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addComment,
+  addToCart,
   deleteComment,
   getAllProducts,
+  getCartDetails,
   getCategories,
+  getProductsByGroupId,
   getSingleProduct,
 } from "./service/products.service";
 
@@ -15,6 +18,8 @@ const initialState = {
   totalProducts: null,
   pagination: {},
   singleProduct: {},
+  getProductsByGrpId: [],
+  cartDetails: {},
 };
 
 const productReducer = createSlice({
@@ -101,6 +106,48 @@ const productReducer = createSlice({
       .addCase(addComment.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
+      })
+      .addCase(getProductsByGroupId.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.getProductsByGrpId = [];
+      })
+      .addCase(getProductsByGroupId.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.getProductsByGrpId = payload;
+      })
+      .addCase(getProductsByGroupId.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+        state.getProductsByGrpId = null;
+      })
+      .addCase(addToCart.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addToCart.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addToCart.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(getCartDetails.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.cartDetails = {};
+      })
+      .addCase(getCartDetails.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.cartDetails = payload;
+      })
+      .addCase(getCartDetails.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+        state.cartDetails = {};
       });
   },
 });

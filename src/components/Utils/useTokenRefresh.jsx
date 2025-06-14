@@ -12,6 +12,7 @@ const useTokenRefresh = () => {
 
     const throttledRefresh = throttle(() => {
       const token = sessionStorage.getItem("token");
+      console.log("triggered");
       if (!token) return;
 
       const now = Date.now();

@@ -2,6 +2,7 @@ import SinglePage from "@/components/SinglePage/SinglePage";
 import AdminLayout from "@/Layout/AdminLayout";
 import AgentLayout from "@/Layout/AgentLayout";
 import MainLayout from "@/Layout/MainLayout";
+import Cart from "@/Pages/Cart/Cart";
 import Electronics from "@/Pages/Electronics/Electronics";
 import Home from "@/Pages/Home/Home";
 import AdminLogin from "@/Pages/Logins/AdminLogin";
@@ -33,6 +34,14 @@ const AllRoutes = () => {
           }
         />
         <Route path="/electronics/:id" element={<SinglePage />} />
+        <Route
+          path="/cart"
+          element={
+            <ClientPrivate>
+              <Cart></Cart>
+            </ClientPrivate>
+          }
+        />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserLogin />} />
       </Route>

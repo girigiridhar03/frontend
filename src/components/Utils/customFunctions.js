@@ -4,8 +4,19 @@ export function throttle(func, delay) {
   return function (...args) {
     let now = Date.now();
     if (now - lastCall >= delay) {
-        lastCall = now;
+      lastCall = now;
       func.apply(this, args);
     }
+  };
+}
+
+export function debounceFun(func, delay) {
+  let timeoutId;
+
+  return function (...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
   };
 }

@@ -45,7 +45,7 @@ export const getSingleProduct = createAsyncThunk(
       const response = await API.get(`/store/getSingleProduct/${productId}`);
       return response?.data?.data;
     } catch (error) {
-      toast(error?.response?.data?.message || "Something went wrong");
+      toast.error(error?.response?.data?.message || "Something went wrong");
       rejectWithValue(error);
     }
   }
@@ -65,7 +65,7 @@ export const deleteComment = createAsyncThunk(
 
       return response?.data;
     } catch (error) {
-      toast(error?.response?.data?.message || "Something went wrong");
+      toast.error(error?.response?.data?.message || "Something went wrong");
       rejectWithValue(error);
     }
   }
@@ -85,7 +85,70 @@ export const addComment = createAsyncThunk(
       }
       return response?.data;
     } catch (error) {
-      toast(error?.response?.data?.message || "Something went wrong");
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const getProductsByGroupId = createAsyncThunk(
+  "getProductsByGroupId",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`/store/getProductsByGroupId/${id}`);
+
+      return response?.data?.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const addToCart = createAsyncThunk(
+  "addtocart",
+  async (reqBody, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/store/addtocart", reqBody);
+
+      if (response?.status === 200 && response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const addtocartinCartPage = createAsyncThunk(
+  "addtocart",
+  async (reqBody, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/store/addtocart", reqBody);
+
+      if (response?.status === 200 && response?.data?.success) {
+        toast.success("Cart Updated");
+      }
+      console.log(response)
+      return response?.data
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const getCartDetails = createAsyncThunk(
+  "getCartDetails",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`/store/getcartdetails`);
+
+      return response?.data
+
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
       rejectWithValue(error);
     }
   }
