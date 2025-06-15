@@ -1,18 +1,24 @@
-// api.js
 import axios from "axios";
 
+// Create axios instance
 const API = axios.create({
   baseURL: "https://backend-practice-project-9ds3.onrender.com",
-  withCredentials: true, // Send cookies with every request
+  withCredentials: true, // still needed for refresh token
 });
 
-// Request interceptor (no token needed since cookies handle it)
+// Add accessToken manually to every request
 API.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+    }
+    return config;
+  },
   (error) => Promise.reject(error)
 );
 
-// Response interceptor to handle token expiration
+// Response interceptor to handle token expiration and refresh logic
 API.interceptors.response.use(
   (res) => res,
   async (error) => {
@@ -27,23 +33,26 @@ API.interceptors.response.use(
     if (shouldTryRefresh) {
       originalRequest._retry = true;
       try {
-        // Try to refresh the token
-        await axios.get(
+        const refreshRes = await axios.get(
           "https://backend-practice-project-9ds3.onrender.com/auth/refreshToken",
-          { withCredentials: true }
+          { withCredentials: true } // needed to send refreshToken cookie
         );
 
-        // Retry the original request after refresh
+        const newAccessToken = refreshRes.data.accessToken;
+        sessionStorage.setItem("token", JSON.stringify(newAccessToken));
+
+        // Retry original request with new token
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return API(originalRequest);
       } catch (refreshError) {
-        // Refresh failed → logout
+        sessionStorage.clear();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
 
-    // Other 401s → logout
     if (isUnauthorized && !shouldTryRefresh) {
+      sessionStorage.clear();
       window.location.href = "/login";
     }
 
