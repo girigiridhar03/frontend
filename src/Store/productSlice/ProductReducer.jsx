@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addComment,
   addToCart,
+  deleteCart,
   deleteComment,
   getAllProducts,
   getCartDetails,
   getCategories,
   getProductsByGroupId,
   getSingleProduct,
+  updateCart,
 } from "./service/products.service";
 
 const initialState = {
@@ -148,6 +150,30 @@ const productReducer = createSlice({
         state.isLoading = false;
         state.error = payload;
         state.cartDetails = {};
+      })
+      .addCase(updateCart.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCart.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateCart.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(deleteCart.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteCart.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(deleteCart.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
       });
   },
 });

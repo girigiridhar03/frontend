@@ -121,17 +121,16 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-export const addtocartinCartPage = createAsyncThunk(
-  "addtocart",
+export const updateCart = createAsyncThunk(
+  "updateCart",
   async (reqBody, { rejectWithValue }) => {
     try {
-      const response = await API.post("/store/addtocart", reqBody);
+      const response = await API.post("/store/updateCart", reqBody);
 
       if (response?.status === 200 && response?.data?.success) {
         toast.success("Cart Updated");
       }
-      console.log(response)
-      return response?.data
+      return response?.data;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
       rejectWithValue(error);
@@ -145,7 +144,23 @@ export const getCartDetails = createAsyncThunk(
     try {
       const response = await API.get(`/store/getcartdetails`);
 
-      return response?.data
+      return response?.data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteCart = createAsyncThunk(
+  "deleteCart",
+  async (id, { rejectWithValue }) => {
+    try {
+     const response =  await API.delete(`store/deletecartitem/${id}`);
+  if (response?.status === 200 && response?.data?.success) {
+        toast.success(response?.data?.message);
+      }
+     return response?.data;
 
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:2345",
+  baseURL: "https://backend-practice-project-9ds3.onrender.com",
   withCredentials: true,
 });
 
@@ -29,7 +29,7 @@ API.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshRes = await axios.get(
-          "http://localhost:2345/auth/refreshToken",
+          "https://backend-practice-project-9ds3.onrender.com/auth/refreshToken",
           { withCredentials: true }
         );
 
