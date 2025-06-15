@@ -3,22 +3,21 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "https://backend-practice-project-9ds3.onrender.com",
-  withCredentials: true,
+  withCredentials: true, // Send cookies with every request
 });
 
-// Attach token to every request
+// Request interceptor (no token needed since cookies handle it)
 API.interceptors.request.use(
-  (config) => {
-    return config;
-  },
+  (config) => config,
   (error) => Promise.reject(error)
 );
 
-// Handle 401 (unauthorized)
+// Response interceptor to handle token expiration
 API.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
+
     const isUnauthorized = error?.response?.status === 401;
     const errorMsg = error?.response?.data?.message;
 
@@ -28,24 +27,23 @@ API.interceptors.response.use(
     if (shouldTryRefresh) {
       originalRequest._retry = true;
       try {
-        const refreshRes = await axios.get(
+        // Try to refresh the token
+        await axios.get(
           "https://backend-practice-project-9ds3.onrender.com/auth/refreshToken",
           { withCredentials: true }
         );
 
-        const newToken = refreshRes.data.accessToken;
-        sessionStorage.setItem("token", JSON.stringify(newToken));
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-
+        // Retry the original request after refresh
         return API(originalRequest);
       } catch (refreshError) {
-        sessionStorage.clear();
+        // Refresh failed → logout
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
+
+    // Other 401s → logout
     if (isUnauthorized && !shouldTryRefresh) {
-      sessionStorage.clear();
       window.location.href = "/login";
     }
 
