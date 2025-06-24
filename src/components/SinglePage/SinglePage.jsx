@@ -48,7 +48,6 @@ const SinglePage = () => {
     (state) => state?.productReducer?.getProductsByGrpId
   );
 
-
   useEffect(() => {
     dispatch(getSingleProduct(id));
     window.scrollTo(0, 0);
@@ -93,7 +92,7 @@ const SinglePage = () => {
     setComment("");
   };
 
-  const handleAddCart = () => { 
+  const handleAddCart = () => {
     dispatch(addToCart({ productId: id, quantity }));
   };
 
@@ -160,7 +159,7 @@ const SinglePage = () => {
                   transition={"all ease-in-out"}
                   border={
                     currentImage === index
-                      ? "2px solid #EC4899"
+                      ? "2px solid #FDBA74"
                       : "1px solid #D1D5DB"
                   }
                   borderRadius={"10px"}
@@ -239,8 +238,8 @@ const SinglePage = () => {
               </NumberInput.Root>
 
               <Button
-                bgColor={"rgb(236, 72, 153,0.3)"}
-                color={"secondary"}
+                bgColor={"secondary"}
+                color={"muted"}
                 fontWeight={"bold"}
                 onClick={handleAddCart}
               >
@@ -278,7 +277,7 @@ const SinglePage = () => {
                   paddingInline={"0.9rem"}
                   fontWeight={selectedTab === index ? "bold" : "semibold"}
                   cursor={"pointer"}
-                  color={selectedTab === index ? "#EC4899" : "#black"}
+                  color={selectedTab === index ? "secondary" : "black"}
                   className={selectedTab === index && "tabShadow"}
                   onClick={() => setSelectedTab(index)}
                   transition={"all linear 0.2s"}
@@ -333,7 +332,7 @@ const SinglePage = () => {
                     >
                       {openMenu === index && (
                         <VStack
-                          bgColor={"rgb(236, 72, 153,0.3)"}
+                          bgColor={"primary"}
                           position={"absolute"}
                           right={-3}
                           top={9}
@@ -423,8 +422,8 @@ const SinglePage = () => {
                   onChange={(e) => setComment(e.target.value)}
                 />
                 <Button
-                  bgColor={"rgb(236, 72, 153,0.3)"}
-                  color={"secondary"}
+                  bgColor={"secondary"}
+                  color={"muted"}
                   fontWeight={"bold"}
                   borderRadius={"10px"}
                   onClick={handleAddComment}

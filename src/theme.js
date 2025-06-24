@@ -5,13 +5,13 @@ const config = defineConfig({
   theme: {
     tokens: {
       colors: {
-        primary: { DEFAULT: "#111827" },
-        accent: { DEFAULT: "#3B82F6" },
-        secondary: { DEFAULT: "#EC4899" },
-        background: { DEFAULT: "#F9FAFB" },
-        surface: { DEFAULT: "#FFFFFF" },
-        text: { DEFAULT: "#374151" },
-        muted: { DEFAULT: "#D1D5DB" },
+        primary: { DEFAULT: "#FDBA74" },        // Soft peach-orange
+        accent: { DEFAULT: "#FCD9B8" },         // Light pastel orange
+        secondary: { DEFAULT: "#FCA17D" },      // Muted coral-orange
+        background: { DEFAULT: "#FFF8F1" },     // Warm white with orange tint
+        surface: { DEFAULT: "#FFF1E6" },        // Light creamy background
+        text: { DEFAULT: "#5C3D2E" },           // Rich brown for contrast
+        muted: { DEFAULT: "#FEECDC" },          // Pale orange for borders/muted text
       },
     },
     config: {

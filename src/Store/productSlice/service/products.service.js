@@ -17,8 +17,8 @@ export const getCategories = createAsyncThunk(
 export const getAllProducts = createAsyncThunk(
   "allProducts",
   async (rebody, { rejectWithValue }) => {
-    const { section, category, page } = rebody;
-    let url = `/store/getallproducts?section=${section}`;
+    const { section, category, page, limit } = rebody;
+    let url = `/store/getallproducts?section=${section}&limit=${limit}`;
 
     if (category) {
       url = url + `&category=${category}`;
@@ -156,12 +156,11 @@ export const deleteCart = createAsyncThunk(
   "deleteCart",
   async (id, { rejectWithValue }) => {
     try {
-     const response =  await API.delete(`store/deletecartitem/${id}`);
-  if (response?.status === 200 && response?.data?.success) {
+      const response = await API.delete(`store/deletecartitem/${id}`);
+      if (response?.status === 200 && response?.data?.success) {
         toast.success(response?.data?.message);
       }
-     return response?.data;
-
+      return response?.data;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
       rejectWithValue(error);

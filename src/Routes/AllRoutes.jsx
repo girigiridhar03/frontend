@@ -3,11 +3,13 @@ import AdminLayout from "@/Layout/AdminLayout";
 import AgentLayout from "@/Layout/AgentLayout";
 import MainLayout from "@/Layout/MainLayout";
 import Cart from "@/Pages/Cart/Cart";
+import Dashboard from "@/Pages/Dashboard/Dashboard";
 import Electronics from "@/Pages/Electronics/Electronics";
 import Home from "@/Pages/Home/Home";
 import AdminLogin from "@/Pages/Logins/AdminLogin";
 import AgentLogin from "@/Pages/Logins/AgentLogin";
 import UserLogin from "@/Pages/Logins/UserLogin";
+import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -47,15 +49,22 @@ const AllRoutes = () => {
       </Route>
 
       {/* AdminLayout */}
-      <Route element={<AdminLayout />}></Route>
+      <Route element={<AdminLayout />}>
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminPrivate>
+              <Dashboard />
+            </AdminPrivate>
+          }
+        />
+        <Route path="/admin/login" element={<AdminLogin />} />
+      </Route>
 
       {/* AgentLayout */}
-      <Route element={<AgentLayout />}></Route>
-
-      {/* Public Routes */}
-
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/agent/login" element={<AgentLogin />} />
+      <Route element={<AgentLayout />}>
+        <Route path="/agent/login" element={<AgentLogin />} />
+      </Route>
     </Routes>
   );
 };

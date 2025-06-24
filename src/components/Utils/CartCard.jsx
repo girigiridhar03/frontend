@@ -72,7 +72,7 @@ const CartCard = ({ product }) => {
           w={"100%"}
           h={"100%"}
           src={product?.productImages?.[0]?.url}
-          objectFit={"cover"}
+          objectFit={"contain"}
         />
       </Box>
       <VStack w={"80%"} alignItems={"flex-start"}>

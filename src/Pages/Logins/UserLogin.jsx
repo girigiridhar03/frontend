@@ -134,8 +134,8 @@ const UserLogin = () => {
               <Button
                 type="submit"
                 loading={loading}
-                bgColor="accent"
-                color="surface"
+                bgColor="primary"
+                color="text"
                 w={"100%"}
               >
                 Register
@@ -174,8 +174,8 @@ const UserLogin = () => {
                 <Button
                   type="submit"
                   loading={loading}
-                  bgColor="accent"
-                  color="surface"
+                  bgColor="primary"
+                color="text"
                   w={"100%"}
                 >
                   Login
@@ -195,7 +195,7 @@ const UserLogin = () => {
                 : location.pathname === "/login" && "/register"
             }
           >
-            <Span color="accent">
+            <Span color="secondary">
               {" "}
               {location.pathname === "/register"
                 ? "Login"

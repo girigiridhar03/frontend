@@ -82,7 +82,7 @@ const ElectronicsSection = () => {
 
         <SimpleGrid columns={[1,1,2,3,4]} w={"100%"} gap={['2rem','2rem','1.5rem','1rem']}>
           {allElectronics?.map((item) => (
-            <Box key={item?._id} w={"100%"}>
+            <Box key={item?._id} w={"100%"} display={'flex'}>
               <CardComponent product={item} />
             </Box>
           ))}
@@ -101,10 +101,10 @@ const ElectronicsSection = () => {
                 return (
                   <IconButton
                     variant={{ base: "outline", _selected: "solid" }}
-                    color={page.value === selectedPage ? "secondary" : "text"}
-                    bgColor={page.value === selectedPage && "rgb(236, 72, 153,0.3)"}
+                    color={page.value === selectedPage ? "text" : "text"}
+                    bgColor={page.value === selectedPage && "primary"}
                     _hover={{
-                      bgColor: "rgb(236, 72, 153,0.3)",
+                      bgColor: "primary",
                       color: "secondary",
                       outline: "none",
                       border: "none",

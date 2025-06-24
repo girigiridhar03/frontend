@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Create axios instance
 const API = axios.create({
   baseURL: "https://backend-practice-project-9ds3.onrender.com",
   withCredentials: true, // still needed for refresh token
