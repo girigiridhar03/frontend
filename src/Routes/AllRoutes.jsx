@@ -58,13 +58,13 @@ const AllRoutes = () => {
             </AdminPrivate>
           }
         />
-        <Route path="/admin/login" element={<AdminLogin />} />
       </Route>
 
       {/* AgentLayout */}
       <Route element={<AgentLayout />}>
         <Route path="/agent/login" element={<AgentLogin />} />
       </Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
     </Routes>
   );
 };
