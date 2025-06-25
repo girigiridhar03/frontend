@@ -9,6 +9,7 @@ import Home from "@/Pages/Home/Home";
 import AdminLogin from "@/Pages/Logins/AdminLogin";
 import AgentLogin from "@/Pages/Logins/AgentLogin";
 import UserLogin from "@/Pages/Logins/UserLogin";
+import Orders from "@/Pages/Orders/Orders";
 import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
 import React from "react";
@@ -58,13 +59,21 @@ const AllRoutes = () => {
             </AdminPrivate>
           }
         />
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminPrivate>
+              <Orders />
+            </AdminPrivate>
+          }
+        />
       </Route>
 
       {/* AgentLayout */}
       <Route element={<AgentLayout />}>
         <Route path="/agent/login" element={<AgentLogin />} />
       </Route>
-        <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
     </Routes>
   );
 };
