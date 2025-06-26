@@ -7,6 +7,9 @@ import { FaPlus } from "react-icons/fa";
 import { MdDescription } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { logout } from "@/Store/LoginSlice/service/Auth.service";
+import { useNavigate } from "react-router-dom";
 const navAndIcons = [
   {
     name: "Dashboard",
@@ -42,6 +45,20 @@ const navSettingsAndLogout = [
 ];
 
 const AdminLayoutNavbar = ({ isSidebarHoverd }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // Handle Logout
+
+  const handleLogout = async (item) => {
+    if (item.name === "Logout") {
+      let result = await dispatch(logout());
+
+      if (logout.fulfilled.match(result)) {
+        navigate("/admin/login");
+      }
+    }
+  };
+
   return (
     <Box
       w={"100%"}
@@ -110,6 +127,7 @@ const AdminLayoutNavbar = ({ isSidebarHoverd }) => {
                 borderRadius: "15px",
                 color: "text",
               }}
+              onClick={() => handleLogout(item)}
             >
               <Box fontSize={"1.5rem"} className="nav-icon">
                 <item.icon />

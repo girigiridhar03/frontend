@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Field, Heading, Input, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/Store/LoginSlice/service/Auth.service";
+import { adminLogin } from "@/Store/LoginSlice/service/Auth.service";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
@@ -27,8 +27,10 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const result = await dispatch(login(loginFormData));
-    if (login.fulfilled.match(result)) {
+    const result = await dispatch(adminLogin(loginFormData));
+    console.log(result);
+    if (adminLogin.fulfilled.match(result)) {
+      console.log("true")
       navigate("/admin/dashboard");
     }
   };

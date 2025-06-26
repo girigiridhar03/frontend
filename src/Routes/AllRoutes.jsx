@@ -10,6 +10,7 @@ import AdminLogin from "@/Pages/Logins/AdminLogin";
 import AgentLogin from "@/Pages/Logins/AgentLogin";
 import UserLogin from "@/Pages/Logins/UserLogin";
 import Orders from "@/Pages/Orders/Orders";
+import Users from "@/Pages/Users/Users";
 import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
 import React from "react";
@@ -67,12 +68,23 @@ const AllRoutes = () => {
             </AdminPrivate>
           }
         />
+        <Route
+          path="/admin/users"
+          element={
+            <AdminPrivate>
+              <Users />
+            </AdminPrivate>
+          }
+        />
       </Route>
 
       {/* AgentLayout */}
       <Route element={<AgentLayout />}>
         <Route path="/agent/login" element={<AgentLogin />} />
       </Route>
+
+
+      
       <Route path="/admin/login" element={<AdminLogin />} />
     </Routes>
   );

@@ -43,6 +43,34 @@ export const login = createAsyncThunk(
 
       if (res?.status === 200 && res?.data?.success) {
         sessionStorage.setItem("token", JSON.stringify(res?.data?.accessToken));
+        sessionStorage.setItem("role", JSON.stringify(res?.data?.data?.role));
+        toast.success(res?.data?.message);
+        return res.data;
+      } else if (res?.status === 404) {
+        toast.error("Access Expired.");
+        sessionStorage.clear();
+        return rejectWithValue(res?.data?.message);
+      } else {
+        toast.error(res?.data?.message);
+        sessionStorage.clear();
+        return rejectWithValue(res?.data?.message);
+      }
+    } catch (error) {
+      sessionStorage.clear();
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const adminLogin = createAsyncThunk(
+  "adminlogin",
+  async (formData, { rejectWithValue }) => {
+    try {
+      let res = await API.post("/auth/admin-login", formData);
+        if (res?.status === 200 && res?.data?.success) {
+        sessionStorage.setItem("admintoken", JSON.stringify(res?.data?.accessToken));
+        sessionStorage.setItem("adminrole", JSON.stringify(res?.data?.data?.role));
         toast.success(res?.data?.message);
         return res.data;
       } else if (res?.status === 404) {
@@ -67,11 +95,29 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       let res = await API.get("/auth/refreshToken");
-      console.log(res?.data);
 
       if (res?.status === 200 && res?.data?.success) {
         sessionStorage.setItem("token", JSON.stringify(res?.data?.accessToken));
       }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      let res = await API.post("/auth/logout");
+
+      if ((res?.status === 200) & res?.data?.success) {
+        toast.success("Logout Successfully.");
+        sessionStorage.clear();
+      }
+
+      return res?.data;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
       return rejectWithValue(error);

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const ClientPrivate = ({ children }) => {
 
-  const token = sessionStorage.getItem("token");
+  const token = JSON.parse(sessionStorage.getItem("token"));
 
   if(!token){
     return <Navigate to={"/login"} />
