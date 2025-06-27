@@ -2,6 +2,7 @@ import SinglePage from "@/components/SinglePage/SinglePage";
 import AdminLayout from "@/Layout/AdminLayout";
 import AgentLayout from "@/Layout/AgentLayout";
 import MainLayout from "@/Layout/MainLayout";
+import AddProduct from "@/Pages/AddProduct/AddProduct";
 import Cart from "@/Pages/Cart/Cart";
 import Dashboard from "@/Pages/Dashboard/Dashboard";
 import Electronics from "@/Pages/Electronics/Electronics";
@@ -73,6 +74,14 @@ const AllRoutes = () => {
           element={
             <AdminPrivate>
               <Users />
+            </AdminPrivate>
+          }
+        />
+        <Route
+          path="/admin/addproduct"
+          element={
+            <AdminPrivate>
+              <AddProduct />
             </AdminPrivate>
           }
         />

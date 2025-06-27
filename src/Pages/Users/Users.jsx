@@ -1,21 +1,53 @@
-import { Box, Table } from '@chakra-ui/react'
-import React from 'react'
+import { getUsersAndAgent } from "@/Store/DashboardSlice/service/dashboard.service";
+import { Box, Table } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Users = () => {
-    console.log(Table); 
+  const dispatch = useDispatch();
+  const usersandagent = useSelector(
+    (state) => state?.dashboardReducer?.usersandagent
+  );
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    dispatch(getUsersAndAgent(filter));
+  }, [filter]);
+
   return (
     <Box>
-        <Table.Root bg={'white'}>
-             <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader>Product</Table.ColumnHeader>
-                <Table.ColumnHeader>Category</Table.ColumnHeader>
-                <Table.ColumnHeader textAlign="end">Price</Table.ColumnHeader>
+      <Table.Root bg={"white"}>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader>S.No</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign={"center"}>Name</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign={"center"}>Email</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign={"center"}>Role</Table.ColumnHeader>
+            <Table.ColumnHeader textAlign={"end"}>CartItems</Table.ColumnHeader>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {usersandagent
+            ?.filter((item) => item?.role !== "admin")
+            ?.map((item, index) => (
+              <Table.Row key={item?._id}>
+                <Table.Cell>{index + 1}.</Table.Cell>
+                <Table.Cell textAlign={"center"}>
+                  {item?.username?.slice(0, 1)?.toUpperCase() +
+                    item?.username?.slice(1)}
+                </Table.Cell>
+                <Table.Cell textAlign={"center"}>{item?.email}</Table.Cell>
+                <Table.Cell textAlign={"center"}>
+                  {item?.role?.slice(0, 1)?.toUpperCase() +
+                    item?.role?.slice(1)}
+                </Table.Cell>
+                <Table.Cell textAlign={"end"}>{}</Table.Cell>
               </Table.Row>
-            </Table.Header>
-        </Table.Root>
+            ))}
+        </Table.Body>
+      </Table.Root>
     </Box>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;
