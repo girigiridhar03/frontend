@@ -17,7 +17,7 @@ const AdminLayout = () => {
 
 
   return (
-    <Box w={"100%"} h={"100vh"} overflow={"hidden"} display={"flex"}>
+    <Box w={"100%"} h={"100vh"} overflow={"hidden"} display={"flex"} position={'relative'}>
       <Box
         w={isSidebarHoverd ? "20%" : "5%"}
         overflow={"hidden"}

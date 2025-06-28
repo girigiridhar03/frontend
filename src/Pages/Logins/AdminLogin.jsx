@@ -55,7 +55,7 @@ const AdminLogin = () => {
         shadow="xs"
         borderRadius="10px"
       >
-        <Heading size={"3xl"}>"Welcome Back!</Heading>
+        <Heading size={"3xl"}>Welcome Back!</Heading>
 
         <form className="w-[100%]" onSubmit={handleLogin}>
           <VStack w={"100%"} gap={"10px"}>
