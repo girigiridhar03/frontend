@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEye } from "react-icons/fa6";
 import StatusBadge from "@/components/Utils/StatusBadge";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const { data, totalOrders, totalPages } = useSelector(
@@ -43,8 +44,8 @@ const Orders = () => {
           value={status}
           onChange={(e) => setStatus(e.target.value)}
         >
-          {orderStatusArray?.map((status) => (
-            <option value={status} style={{ textTransform: "capitalize" }}>
+          {orderStatusArray?.map((status,index) => (
+            <option key={index} value={status} style={{ textTransform: "capitalize" }}>
               {status}
             </option>
           ))}
@@ -57,7 +58,7 @@ const Orders = () => {
               Order ID
             </Table.ColumnHeader>
             <Table.ColumnHeader textAlign={"center"}>
-              Username
+              Customer
             </Table.ColumnHeader>
             <Table.ColumnHeader textAlign={"center"}>Email</Table.ColumnHeader>
             <Table.ColumnHeader textAlign={"center"}>
@@ -96,6 +97,7 @@ const Orders = () => {
                 <StatusBadge status={order?.status} />
               </Table.Cell>
               <Table.Cell textAlign={"center"}>
+                <Link to={`/admin/order/${order?._id}`}>
                 <Box
                   display={"flex"}
                   justifyContent={"center"}
@@ -103,6 +105,7 @@ const Orders = () => {
                 >
                   <FaEye />
                 </Box>
+                </Link>
               </Table.Cell>
             </Table.Row>
           ))}

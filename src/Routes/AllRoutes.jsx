@@ -11,6 +11,7 @@ import AdminLogin from "@/Pages/Logins/AdminLogin";
 import AgentLogin from "@/Pages/Logins/AgentLogin";
 import UserLogin from "@/Pages/Logins/UserLogin";
 import Orders from "@/Pages/Orders/Orders";
+import SingleOrder from "@/Pages/Orders/SingleOrder";
 import Users from "@/Pages/Users/Users";
 import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
@@ -85,6 +86,14 @@ const AllRoutes = () => {
             </AdminPrivate>
           }
         />
+        <Route
+          path="/admin/order/:id"
+          element={
+            <AdminPrivate>
+              <SingleOrder />
+            </AdminPrivate>
+          }
+        />
       </Route>
 
       {/* AgentLayout */}
@@ -92,8 +101,6 @@ const AllRoutes = () => {
         <Route path="/agent/login" element={<AgentLogin />} />
       </Route>
 
-
-      
       <Route path="/admin/login" element={<AdminLogin />} />
     </Routes>
   );
