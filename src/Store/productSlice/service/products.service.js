@@ -167,3 +167,17 @@ export const deleteCart = createAsyncThunk(
     }
   }
 );
+
+// Admin
+export const adminAddProduct = createAsyncThunk(
+  "addproduct",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/store/addproduct", formData);
+      toast.success(response?.data?.message);
+      return response?.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

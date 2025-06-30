@@ -437,7 +437,7 @@ const SinglePage = () => {
 
         {/* Related Products */}
 
-        {getProductsByGrpId?.length > 0 && (
+        {getProductsByGrpId?.length > 1 && (
           <VStack w={"100%"} alignItems={"flex-start"}>
             <Heading size={"3xl"}>Related Products</Heading>
             <SimpleGrid
@@ -445,13 +445,15 @@ const SinglePage = () => {
               w={"100%"}
               gap={["2rem", "2rem", "1.5rem", "1rem"]}
             >
-              {getProductsByGrpId?.map((item) => {
-                return (
-                  <Box key={item?._id} w={"100%"}>
-                    <CardComponent product={item} />
-                  </Box>
-                );
-              })}
+              {getProductsByGrpId
+                ?.filter((item) => item?._id !== id)
+                ?.map((item) => {
+                  return (
+                    <Box key={item?._id} w={"100%"}>
+                      <CardComponent product={item} />
+                    </Box>
+                  );
+                })}
             </SimpleGrid>
           </VStack>
         )}

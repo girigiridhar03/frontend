@@ -14,15 +14,16 @@ const Orders = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [status, setStatus] = useState("pending");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     dispatch(orderDetails({ page, limit, status }));
-  }, []);
+  }, [status,limit,page]);
 
   console.log(data);
 
   const orderStatusArray = [
+    "All",
     "pending",
     "processing",
     "out for delivery",
@@ -45,7 +46,7 @@ const Orders = () => {
           onChange={(e) => setStatus(e.target.value)}
         >
           {orderStatusArray?.map((status,index) => (
-            <option key={index} value={status} style={{ textTransform: "capitalize" }}>
+            <option key={index} value={status === "All" ? "" : status} style={{ textTransform: "capitalize" }}>
               {status}
             </option>
           ))}

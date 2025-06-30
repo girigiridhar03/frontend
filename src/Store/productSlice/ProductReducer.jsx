@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addComment,
   addToCart,
+  adminAddProduct,
   deleteCart,
   deleteComment,
   getAllProducts,
@@ -174,6 +175,18 @@ const productReducer = createSlice({
       .addCase(deleteCart.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload;
+      })
+      .addCase(adminAddProduct.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(adminAddProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(adminAddProduct.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;  
       });
   },
 });

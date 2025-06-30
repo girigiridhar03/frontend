@@ -283,7 +283,7 @@ const SingleOrder = () => {
 
           <Box w="100%">
             <Text mb="0.5rem" fontWeight="semibold" fontSize={"1.1rem"}>
-              Assign Delivery Agent
+              Assign Delivery Agent <Span color={'text'}>{singleOrder?.isAssign && `(Assigned)`}</Span>
             </Text>
             <select
               style={{
@@ -300,7 +300,7 @@ const SingleOrder = () => {
                 <option value="">{singleOrder?.deliveryAgent?.username}</option>
               )}
 
-              <option value="">All Agents</option>
+              <option value="" hidden={singleOrder?.isAssign}>All Agents</option>
 
               {/* Actual agent options */}
               {agentsData.map((agent) => (
