@@ -12,6 +12,8 @@ import AgentLogin from "@/Pages/Logins/AgentLogin";
 import UserLogin from "@/Pages/Logins/UserLogin";
 import Orders from "@/Pages/Orders/Orders";
 import SingleOrder from "@/Pages/Orders/SingleOrder";
+import ProductDetails from "@/Pages/ProductDetails/ProductDetails";
+import SingleProductAdmin from "@/Pages/ProductDetails/SingleProductAdmin";
 import Users from "@/Pages/Users/Users";
 import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
@@ -71,6 +73,14 @@ const AllRoutes = () => {
           }
         />
         <Route
+          path="/admin/order/:id"
+          element={
+            <AdminPrivate>
+              <SingleOrder />
+            </AdminPrivate>
+          }
+        />
+        <Route
           path="/admin/users"
           element={
             <AdminPrivate>
@@ -87,10 +97,18 @@ const AllRoutes = () => {
           }
         />
         <Route
-          path="/admin/order/:id"
+          path="/admin/productdetails"
           element={
             <AdminPrivate>
-              <SingleOrder />
+              <ProductDetails />
+            </AdminPrivate>
+          }
+        />
+        <Route
+          path="/admin/singleproduct/:id"
+          element={
+            <AdminPrivate>
+              <SingleProductAdmin />
             </AdminPrivate>
           }
         />

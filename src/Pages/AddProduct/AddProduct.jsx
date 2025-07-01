@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -31,8 +32,6 @@ const AddProduct = () => {
   const handleOnChange = (e) => {
     const { name, value, files } = e.target;
 
-    console.log(files);
-
     setFormData((prev) => {
       return {
         ...prev,
@@ -44,6 +43,21 @@ const AddProduct = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
+
+    if (
+      !formData.name ||
+      !formData.price ||
+      !formData.brand ||
+      !formData.category ||
+      !formData.rating ||
+      !formData.section ||
+      !formData.stock ||
+      !formData.color ||
+      !formData.productImages ||
+      !formData.description
+    ) {
+      return toast.warn("All fields are required");
+    }
 
     Object.entries(formData)?.forEach(([key, value]) => {
       if (key === "productImages") {
