@@ -188,7 +188,7 @@ const SingleOrder = () => {
             gap="1rem"
             fontSize="1.2rem"
             fontWeight="semibold"
-            mt="auto" // 👈 This is what pushes it to bottom
+            mt="auto"
           >
             <Text color="text">Total Amount</Text>
             <Text>₹{singleOrder?.totalPrice?.toLocaleString()}</Text>

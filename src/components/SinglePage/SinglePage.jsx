@@ -363,7 +363,8 @@ const SinglePage = () => {
                         <HStack w={"100%"} gap={"0.6rem"}>
                           <Box>
                             <Avatar.Root bgColor={"secondary"} size={"sm"}>
-                              <Avatar.Fallback name={comment?.name} />
+                              <Avatar.Fallback name={comment?.user?.username} />
+                              <Avatar.Image src={comment?.user?.image?.url} />
                             </Avatar.Root>
                           </Box>
                           <VStack
@@ -373,8 +374,10 @@ const SinglePage = () => {
                           >
                             <Text fontSize={"0.9rem"} fontWeight={"bold"}>
                               {`${
-                                comment?.name?.charAt(0)?.toUpperCase() +
-                                comment?.name?.slice(1)?.toLowerCase()
+                                comment?.user?.username
+                                  ?.charAt(0)
+                                  ?.toUpperCase() +
+                                comment?.user?.username?.slice(1)?.toLowerCase()
                               }${comment?.isDelete ? ` (You)` : ""}`}
                             </Text>
                             <Text fontSize={"0.8rem"} color={"text"}>
