@@ -14,6 +14,7 @@ import Orders from "@/Pages/Orders/Orders";
 import SingleOrder from "@/Pages/Orders/SingleOrder";
 import ProductDetails from "@/Pages/ProductDetails/ProductDetails";
 import SingleProductAdmin from "@/Pages/ProductDetails/SingleProductAdmin";
+import SingleUserDetails from "@/Pages/SingleUserDetails/SingleUserDetails";
 import Users from "@/Pages/Users/Users";
 import AdminPrivate from "@/Private/AdminPrivate";
 import ClientPrivate from "@/Private/ClientPrivate";
@@ -109,6 +110,14 @@ const AllRoutes = () => {
           element={
             <AdminPrivate>
               <SingleProductAdmin />
+            </AdminPrivate>
+          }
+        />
+        <Route
+          path="/admin/singleuserdetails/:id/:role"
+          element={
+            <AdminPrivate>
+              <SingleUserDetails />
             </AdminPrivate>
           }
         />

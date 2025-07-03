@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUsersAndAgent } from "./service/dashboard.service";
+import {
+  agentDetails,
+  getSingleUser,
+  getUsersAndAgent,
+} from "./service/dashboard.service";
 
 const initialState = {
   isLoading: false,
   error: null,
   usersandagent: [],
+  getsingleuser: {},
+  getSingleAgent: {},
 };
 
 const dashboardSlice = createSlice({
@@ -25,6 +31,32 @@ const dashboardSlice = createSlice({
       .addCase(getUsersAndAgent.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.usersandagent = [];
+        state.error = payload;
+      })
+      .addCase(getSingleUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getSingleUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.getsingleuser = payload;
+        state.error = null;
+      })
+      .addCase(getSingleUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      })
+      .addCase(agentDetails.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(agentDetails.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.getSingleAgent = payload;
+        state.error = null;
+      })
+      .addCase(agentDetails.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload;
       });
   },

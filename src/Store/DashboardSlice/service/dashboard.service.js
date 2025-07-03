@@ -17,3 +17,35 @@ export const getUsersAndAgent = createAsyncThunk(
     }
   }
 );
+
+export const getSingleUser = createAsyncThunk(
+  "getSingleuser",
+  async (userid, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`/auth/getsingleuser/${userid}`);
+
+      return response?.data?.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const agentDetails = createAsyncThunk(
+  "agentDetails",
+  async (agentId, { rejectWithValue }) => {
+    try {
+      let endPoint = "/order/agentorders";
+
+      if (agentId) {
+        endPoint = endPoint + `?agentid=${agentId}`;
+      }
+
+      const response = await API.get(endPoint);
+
+      return response?.data?.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
