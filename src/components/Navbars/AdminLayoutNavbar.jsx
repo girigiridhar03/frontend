@@ -9,27 +9,32 @@ import { IoLogOut } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { logout } from "@/Store/LoginSlice/service/Auth.service";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const navAndIcons = [
   {
     name: "Dashboard",
     icon: MdDashboard,
+    link: "/admin/dashboard",
   },
   {
     name: "Orders",
     icon: ImTruck,
+    link: "/admin/orders",
   },
   {
     name: "Users",
     icon: FaPeopleGroup,
+    link: "/admin/users",
   },
   {
     name: "Add Product",
     icon: FaPlus,
+    link: "/admin/addproduct",
   },
   {
     name: "Product Details",
     icon: MdDescription,
+    link: "/admin/productdetails",
   },
 ];
 
@@ -47,6 +52,7 @@ const navSettingsAndLogout = [
 const AdminLayoutNavbar = ({ isSidebarHoverd }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const path = useLocation();
   // Handle Logout
 
   const handleLogout = async (item) => {
@@ -58,6 +64,8 @@ const AdminLayoutNavbar = ({ isSidebarHoverd }) => {
       }
     }
   };
+
+  console.log(path);
 
   return (
     <Box
@@ -76,35 +84,46 @@ const AdminLayoutNavbar = ({ isSidebarHoverd }) => {
         <Box w={"100%"} display={"flex"} flexDirection={"column"} gap={"1rem"}>
           {navAndIcons?.map((item, index) => {
             const mapKey = index;
+            const condition =
+              path.pathname?.split("/")[2] ===
+              item?.name?.split(" ")?.join("")?.toLowerCase();
+            console.log(
+              path.pathname?.split("/")[2] ===
+                item?.name?.split(" ")?.join("")?.toLowerCase()
+            );
             return (
-              <HStack
-                key={mapKey}
-                w={"100%"}
-                gap={"1rem"}
-                p={"1rem"}
-                color={"grey"}
-                cursor="pointer"
-                className="nav"
-                _hover={{
-                  bgColor: "secondary",
-                  borderRadius: "15px",
-                  color: "text",
-                }}
-              >
-                <Box fontSize={"1.5rem"} className="nav-icon">
-                  <item.icon />
-                </Box>
-                {isSidebarHoverd && (
-                  <Text
-                    fontSize={"1.2rem"}
-                    fontWeight={"semibold"}
-                    className="nav-name"
-                    display={isSidebarHoverd ? "block" : "none"}
-                  >
-                    {item.name}
-                  </Text>
-                )}
-              </HStack>
+              <Link to={item?.link}>
+                <HStack
+                  key={mapKey}
+                  w={"100%"}
+                  gap={"1rem"}
+                  p={"1rem"}
+                  color={condition ? "text" : "grey"}
+                  cursor="pointer"
+                  bgColor={condition ? "secondary" : ""}
+                  borderRadius={condition ? "15px" : ""}
+                  className="nav"
+                  _hover={{
+                    bgColor: "secondary",
+                    borderRadius: "15px",
+                    color: "text",
+                  }}
+                >
+                  <Box fontSize={"1.5rem"} className="nav-icon">
+                    <item.icon />
+                  </Box>
+                  {isSidebarHoverd && (
+                    <Text
+                      fontSize={"1.2rem"}
+                      fontWeight={"semibold"}
+                      className="nav-name"
+                      display={isSidebarHoverd ? "block" : "none"}
+                    >
+                      {item.name}
+                    </Text>
+                  )}
+                </HStack>
+              </Link>
             );
           })}
         </Box>

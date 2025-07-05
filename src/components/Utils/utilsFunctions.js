@@ -4,4 +4,7 @@ export const generateBasedOnCategory = (category, variant) => {
   } else if (category === "Tv") {
     return `${variant}inch`;
   }
+  else{
+    return "-"
+  }
 };

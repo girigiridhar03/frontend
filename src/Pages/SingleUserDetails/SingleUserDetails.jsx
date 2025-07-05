@@ -1,8 +1,9 @@
+import { generateBasedOnCategory } from "@/components/Utils/utilsFunctions";
 import {
   agentDetails,
   getSingleUser,
 } from "@/Store/DashboardSlice/service/dashboard.service";
-import { Avatar, Box, Heading, HStack, Table, VStack } from "@chakra-ui/react";
+import { Avatar, Box, Heading, HStack, Table, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { FaEye } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,6 +82,11 @@ const SingleUserDetails = () => {
               ? getSingleAgent?.agent?.username
               : getsingleuser?.username}
           </Heading>
+          <Text fontWeight={'semibold'}>
+            {role === "agent"
+              ? getSingleAgent?.agent?.email
+              : getsingleuser?.email}
+          </Text>
         </VStack>
       </Box>
 
@@ -146,6 +152,51 @@ const SingleUserDetails = () => {
                           <FaEye />
                         </Box>
                       </Link>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </VStack>
+        )}
+        {role === "user" && (
+          <VStack mt={"1rem"} w={"100%"} maxH={"430px"}>
+            <Table.Root
+              variant={"outline"}
+              borderRadius={"10px"}
+              h={"auto"}
+              overflow={"auto"}
+            >
+              <Table.Header>
+                <Table.Row>
+                  <Table.ColumnHeader>ProductId</Table.ColumnHeader>
+                  <Table.ColumnHeader textAlign={"center"}>
+                    Name
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader textAlign={"center"}>
+                    Price
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader textAlign={"center"}>
+                    Qty
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader textAlign={"center"}>
+                    Variant
+                  </Table.ColumnHeader>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {getsingleuser?.cartItems?.map((item) => (
+                  <Table.Row key={item?._id}>
+                    <Table.Cell>{item?._id}</Table.Cell>
+                    <Table.Cell textAlign={"center"}>{item?.name}</Table.Cell>
+                    <Table.Cell textAlign={"center"}>
+                      {item?.price?.toLocaleString()}
+                    </Table.Cell>
+                    <Table.Cell textAlign={"center"}>
+                      {item?.quantity}
+                    </Table.Cell>
+                    <Table.Cell textAlign={"center"}>
+                      {generateBasedOnCategory(item?.category, item?.variant)}
                     </Table.Cell>
                   </Table.Row>
                 ))}
